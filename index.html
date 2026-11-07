@@ -217,7 +217,10 @@
             <input type="tel" required class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-spudYellow outline-none bg-white">
           </div>
         </div>
-
+<div>
+  <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Email Address</label>
+  <input type="email" required class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-spudYellow outline-none bg-white" placeholder="your.email@example.com">
+</div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Target Event Date</label>
@@ -262,29 +265,43 @@
     function closeCateringModal() {
       document.getElementById('cateringModal').classList.add('hidden');
     }
-    function openOrderOptions() {
-      document.getElementById('order-options').scrollIntoView({ behavior: 'smooth' });
-    }
-   async function handleCateringSubmit(e) {
+async function handleCateringSubmit(e) {
       e.preventDefault();
       
       const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.innerText = "Submitting...";
+      submitBtn.innerText = "Generating Quote...";
       submitBtn.disabled = true;
 
       const formData = {
         fullName: e.target[0].value,
         contactNumber: e.target[1].value,
-        eventDate: e.target[2].value,
-        headcount: e.target[3].value,
-        location: e.target[4].value,
-        notes: e.target[5].value
+        email: e.target[2].value,          // Newly added email input
+        eventDate: e.target[3].value,
+        headcount: e.target[4].value,
+        location: e.target[5].value,
+        notes: e.target[6].value
       };
 
-      const scriptURL = "https://script.google.com/macros/s/AKfycbzQLFq63zSLgXtG1sWD3WwYrO0jyW7oDvfonaSpDwAdO_z-H31T1s6CzK-0w47mEtPv/exec";
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzQLFq63zSLgXtG1sWD3WwYr0OjyW7oDvfonaSpDwAd0_z-H31T1s6CzK-0w47mEtPv/exec";
 
       try {
         await fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        alert('Thank you! Your catering inquiry has been submitted. A PDF quotation has been sent to your email.');
+        e.target.reset();
+        closeCateringModal();
+      } catch (err) {
+        alert('Something went wrong submitting your request. Please message us directly on Instagram or Facebook.');
+      } finally {
+        submitBtn.innerText = "Submit Catering Request";
+        submitBtn.disabled = false;
+      }
+    }
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
