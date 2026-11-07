@@ -258,47 +258,49 @@
     <p>&copy; 2026 Spud Plug. All rights reserved. | Worth every load.</p>
   </footer>
 
-  <script>
+<script>
     function openCateringModal() {
       document.getElementById('cateringModal').classList.remove('hidden');
     }
     function closeCateringModal() {
       document.getElementById('cateringModal').classList.add('hidden');
     }
-async function handleCateringSubmit(e) {
-  e.preventDefault();
-  
-  const submitBtn = e.target.querySelector('button[type="submit"]');
-  submitBtn.innerText = "Generating Quote...";
-  submitBtn.disabled = true;
 
-  const formData = {
-    fullName: e.target[0].value,
-    contactNumber: e.target[1].value,
-    email: e.target[2].value,
-    eventDate: e.target[3].value,
-    headcount: e.target[4].value,
-    location: e.target[5].value,
-    notes: e.target[6].value
-  };
+    async function handleCateringSubmit(e) {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.innerText = "Generating Quote...";
+      submitBtn.disabled = true;
 
-  const scriptURL = "https://script.google.com/macros/s/AKfycbzQLFq63zSLgXtG1sWD3WwYr0OjyW7oDvfonaSpDwAd0_z-H31T1s6CzK-0w47mEtPv/exec";
+      const formData = {
+        fullName: e.target[0].value,
+        contactNumber: e.target[1].value,
+        email: e.target[2].value,
+        eventDate: e.target[3].value,
+        headcount: e.target[4].value,
+        location: e.target[5].value,
+        notes: e.target[6].value
+      };
 
-  try {
-    await fetch(scriptURL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzQLFq63zSLgXtG1sWD3WwYr0OjyW7oDvfonaSpDwAd0_z-H31T1s6CzK-0w47mEtPv/exec";
 
-    alert('Thank you! Your catering inquiry has been submitted. A PDF quotation has been sent to your email.');
-    e.target.reset();
-    closeCateringModal();
-  } catch (err) {
-    alert('Something went wrong submitting your request. Please message us directly on Instagram or Facebook.');
-  } finally {
-    submitBtn.innerText = "Submit Catering Request";
-    submitBtn.disabled = false;
-  }
-}
+      try {
+        await fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        alert('Thank you! Your catering inquiry has been submitted. A PDF quotation has been sent to your email.');
+        e.target.reset();
+        closeCateringModal();
+      } catch (err) {
+        alert('Something went wrong submitting your request. Please message us directly on Instagram or Facebook.');
+      } finally {
+        submitBtn.innerText = "Submit Catering Request";
+        submitBtn.disabled = false;
+      }
+    }
+  </script>
