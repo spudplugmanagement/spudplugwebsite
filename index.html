@@ -278,16 +278,16 @@
       submitBtn.innerText = "Generating Quote...";
       submitBtn.disabled = true;
 
-      const formData = {
-        fullName: e.target[0].value,
-        contactNumber: e.target[1].value,
-        email: e.target[2].value,
-        eventDate: e.target[3].value,
-        headcount: e.target[4].value,
-        location: e.target[5].value,
-        notes: e.target[6].value
-      };
-
+ const formData = {
+          fullName: document.getElementById('fullName') ? document.getElementById('fullName').value : e.target[0].value,
+          contactNumber: document.getElementById('contactNumber') ? document.getElementById('contactNumber').value : e.target[1].value,
+          email: document.getElementById('email') ? document.getElementById('email').value : e.target[2].value,
+          eventDate: document.getElementById('eventDate') ? document.getElementById('eventDate').value : e.target[3].value,
+          packageSelection: document.getElementById('packageSelection') ? document.getElementById('packageSelection').value : "",
+          headcount: document.getElementById('headcount') ? document.getElementById('headcount').value : "",
+          location: document.getElementById('location') ? document.getElementById('location').value : "",
+          notes: document.getElementById('notes') ? document.getElementById('notes').value : ""
+        };
       const scriptURL = "https://script.google.com/macros/s/AKfycbzQLFq63zSLgXtG1sWD3WwYrO0jyW7oDvfonaSpDwAdO_z-H31T1s6CzK-0w47mEtPv/exec";
 
       try {
